@@ -230,7 +230,7 @@ export default function TicketForm({ userId, userEmail }: TicketFormProps) {
               <Select
                 name="date"
                 value={formData.date}
-                onValueChange={(value) => handleChange("date", value)}
+                onValueChange={(value: string) => handleChange("date", value)}
                 required
               >
                 <SelectTrigger>
@@ -279,7 +279,7 @@ export default function TicketForm({ userId, userEmail }: TicketFormProps) {
                     <Select
                       name="hec_student_tickets"
                       value={formData.hec_student_tickets || "0"}
-                      onValueChange={(value) =>
+                      onValueChange={(value: string) =>
                         handleChange("hec_student_tickets", value)
                       }
                     >
@@ -302,7 +302,7 @@ export default function TicketForm({ userId, userEmail }: TicketFormProps) {
                     <Select
                       name="young_tickets"
                       value={formData.young_tickets || "0"}
-                      onValueChange={(value) =>
+                      onValueChange={(value: string) =>
                         handleChange("young_tickets", value)
                       }
                     >
@@ -325,7 +325,7 @@ export default function TicketForm({ userId, userEmail }: TicketFormProps) {
                     <Select
                       name="hec_staff_tickets"
                       value={formData.hec_staff_tickets || "0"}
-                      onValueChange={(value) =>
+                      onValueChange={(value: string) =>
                         handleChange("hec_staff_tickets", value)
                       }
                     >
@@ -346,7 +346,7 @@ export default function TicketForm({ userId, userEmail }: TicketFormProps) {
                     <Select
                       name="other_tickets"
                       value={formData.other_tickets || "0"}
-                      onValueChange={(value) =>
+                      onValueChange={(value: string) =>
                         handleChange("other_tickets", value)
                       }
                     >
@@ -372,7 +372,7 @@ export default function TicketForm({ userId, userEmail }: TicketFormProps) {
                     <Select
                       name="palais_hec_student_tickets"
                       value={formData.palais_hec_student_tickets || "0"}
-                      onValueChange={(value) =>
+                      onValueChange={(value: string) =>
                         handleChange("palais_hec_student_tickets", value)
                       }
                     >
@@ -395,7 +395,7 @@ export default function TicketForm({ userId, userEmail }: TicketFormProps) {
                     <Select
                       name="palais_young_tickets"
                       value={formData.palais_young_tickets || "0"}
-                      onValueChange={(value) =>
+                      onValueChange={(value: string) =>
                         handleChange("palais_young_tickets", value)
                       }
                     >
@@ -416,7 +416,7 @@ export default function TicketForm({ userId, userEmail }: TicketFormProps) {
                     <Select
                       name="palais_other_tickets"
                       value={formData.palais_other_tickets || "0"}
-                      onValueChange={(value) =>
+                      onValueChange={(value: string) =>
                         handleChange("palais_other_tickets", value)
                       }
                     >
