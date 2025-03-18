@@ -46,13 +46,13 @@ export default function PromosPage() {
                 Aucun membre trouvé pour cette promotion
               </p>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {filteredMembers.map((member, index) => (
                   <Card
                     key={index}
                     className="overflow-hidden hover:shadow-md transition-shadow"
                   >
-                    <div className="relative h-48 w-full">
+                    <div className="relative h-56 w-full">
                       <Image
                         src={member.src}
                         alt={member.title}
