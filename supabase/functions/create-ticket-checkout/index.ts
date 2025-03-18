@@ -1,6 +1,7 @@
+// @ts-nocheck
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import Stripe from "https://esm.sh/stripe@13.6.0?target=deno";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import Stripe from "https://esm.sh/stripe@13.6.0?target=deno";
 
 const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
   apiVersion: "2023-10-16",
@@ -32,7 +33,7 @@ serve(async (req) => {
         {
           status: 400,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
-        },
+        }
       );
     }
 
@@ -273,7 +274,7 @@ serve(async (req) => {
       ) {
         const supabaseAdmin = createClient(
           Deno.env.get("SUPABASE_URL") || "",
-          Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "",
+          Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || ""
         );
 
         // Prepare ticket data based on venue
@@ -321,7 +322,7 @@ serve(async (req) => {
         }
       } else {
         console.log(
-          "Skipping database insert - Supabase credentials not available",
+          "Skipping database insert - Supabase credentials not available"
         );
       }
 
@@ -330,7 +331,7 @@ serve(async (req) => {
         {
           status: 200,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
-        },
+        }
       );
     } catch (stripeError) {
       console.error("Error creating Stripe checkout session:", stripeError);
@@ -339,7 +340,7 @@ serve(async (req) => {
         {
           status: 400,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
-        },
+        }
       );
     }
   } catch (error) {
@@ -353,7 +354,7 @@ serve(async (req) => {
       {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
-      },
+      }
     );
   }
 });

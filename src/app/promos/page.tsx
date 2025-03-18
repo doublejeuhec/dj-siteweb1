@@ -14,7 +14,7 @@ interface Member {
   commentaireOR: string;
 }
 
-export const promo2024 = [
+const promo2024 = [
   {
     title: "Adèle Quesnoit",
     src: "/images/CF/Promo2024/optimized/Adèle.jpg",
@@ -131,7 +131,7 @@ export const promo2024 = [
   },
 ];
 
-export const promo2025 = [
+const promo2025 = [
   {
     title: "Alexandre",
     src: "/images/CF/Promo2025/optimized/Alexandre.jpg",

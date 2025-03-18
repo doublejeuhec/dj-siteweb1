@@ -1,9 +1,6 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Card,
   CardContent,
@@ -12,6 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -20,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CreditCard, Loader2 } from "lucide-react";
+import { useState } from "react";
 import { supabase } from "../../supabase/supabase";
 
 interface TicketFormProps {
@@ -119,7 +119,7 @@ export default function TicketForm({ userId, userEmail }: TicketFormProps) {
           0
       ) {
         throw new Error(
-          "Veuillez sélectionner au moins un billet pour la représentation à HEC",
+          "Veuillez sélectionner au moins un billet pour la représentation à HEC"
         );
       }
 
@@ -131,7 +131,7 @@ export default function TicketForm({ userId, userEmail }: TicketFormProps) {
           0
       ) {
         throw new Error(
-          "Veuillez sélectionner au moins un billet pour la représentation au Palais des Glaces",
+          "Veuillez sélectionner au moins un billet pour la représentation au Palais des Glaces"
         );
       }
 
@@ -142,6 +142,8 @@ export default function TicketForm({ userId, userEmail }: TicketFormProps) {
         return_url: window.location.origin,
       });
 
+      let checkoutUrl;
+
       try {
         const { data, error } = await supabase.functions.invoke(
           "create-ticket-checkout",
@@ -151,7 +153,7 @@ export default function TicketForm({ userId, userEmail }: TicketFormProps) {
               user_id: userId,
               return_url: window.location.origin,
             },
-          },
+          }
         );
 
         console.log("Edge function response:", { data, error });
@@ -160,23 +162,26 @@ export default function TicketForm({ userId, userEmail }: TicketFormProps) {
           console.error("Edge function error:", error);
           throw error;
         }
+
+        // Store the URL from the response
+        checkoutUrl = data?.url;
+
+        if (!checkoutUrl) {
+          throw new Error("Aucune URL de paiement retournée");
+        }
       } catch (invokeError) {
         console.error("Failed to invoke edge function:", invokeError);
         throw new Error(
-          `Failed to send request to edge function: ${invokeError.message}`,
+          `Failed to send request to edge function: ${invokeError instanceof Error ? invokeError.message : String(invokeError)}`
         );
       }
 
       // Redirect to Stripe checkout
-      if (data?.url) {
-        window.location.href = data.url;
-      } else {
-        throw new Error("Aucune URL de paiement retournée");
-      }
+      window.location.href = checkoutUrl;
     } catch (err: any) {
       setError(
         err.message ||
-          "Une erreur s'est produite lors de la création du paiement",
+          "Une erreur s'est produite lors de la création du paiement"
       );
     } finally {
       setLoading(false);
