@@ -8,6 +8,7 @@ import UserProfile from "./user-profile";
 export default function Navbar() {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -60,6 +61,10 @@ export default function Navbar() {
     }
   };
 
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   return (
     <nav className="w-full border-b border-gray-200 bg-white py-4 sticky top-0 z-50">
       <div className="container mx-auto px-4 flex justify-between items-center">
@@ -67,6 +72,29 @@ export default function Navbar() {
           DOUBLE JEU
         </Link>
 
+        {/* Mobile menu button */}
+        <button
+          className="md:hidden flex items-center p-2"
+          onClick={toggleMobileMenu}
+          aria-label="Toggle menu"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 text-gray-700"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+
+        {/* Desktop menu items */}
         <div className="hidden md:flex gap-8 items-center">
           <Link
             href="/#about"
@@ -107,7 +135,8 @@ export default function Navbar() {
           )}
         </div>
 
-        <div className="flex gap-4 items-center">
+        {/* User profile/login section */}
+        <div className="hidden md:flex gap-4 items-center">
           {!loading && user ? (
             <>
               <Link href="/dashboard"></Link>
@@ -126,6 +155,70 @@ export default function Navbar() {
           )}
         </div>
       </div>
+
+      {/* Mobile menu dropdown */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-white py-2 px-4 shadow-lg absolute left-0 right-0">
+          <div className="flex flex-col space-y-3">
+            <Link
+              href="/#about"
+              className="font-medium text-gray-700 hover:text-red-600 transition-colors py-2"
+              onClick={(e) => {
+                handleScrollToElement("about")(e);
+                setMobileMenuOpen(false);
+              }}
+            >
+              À Propos
+            </Link>
+            <Link
+              href="/#spectacle"
+              className="font-medium text-gray-700 hover:text-red-600 transition-colors py-2"
+              onClick={(e) => {
+                handleScrollToElement("spectacle")(e);
+                setMobileMenuOpen(false);
+              }}
+            >
+              Spectacles
+            </Link>
+            <Link
+              href="/promos"
+              className="font-medium text-gray-700 hover:text-red-600 transition-colors py-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Voir les promos
+            </Link>
+            <Link
+              href="/tickets"
+              className="font-medium text-gray-700 hover:text-red-600 transition-colors py-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Billetterie
+            </Link>
+            {!loading && user && (
+              <Link
+                href="/dashboard"
+                className="font-medium text-gray-700 hover:text-red-600 transition-colors py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Espace Membres
+              </Link>
+            )}
+            {!loading && user ? (
+              <div className="py-2">
+                <UserProfile />
+              </div>
+            ) : (
+              <Link
+                href="/sign-in"
+                className="font-medium text-gray-700 hover:text-red-600 transition-colors py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Connexion
+              </Link>
+            )}
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
