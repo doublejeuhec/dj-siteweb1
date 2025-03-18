@@ -140,7 +140,7 @@ export default async function Signup(props: {
 
               <div className="space-y-2">
                 <Label htmlFor="profession" className="text-sm font-medium">
-                  Activité professionnelle actuelle
+                  Information sur ton métier : entreprise ; poste ; domaine
                 </Label>
                 <Input
                   id="profession"

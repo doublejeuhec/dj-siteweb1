@@ -63,13 +63,6 @@ export default async function Home() {
                 </Link>
               </div>
             </div>
-            <div className="w-full md:w-1/2">
-              <div className="aspect-video rounded-xl overflow-hidden shadow-xl bg-black flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
-                <span className="text-white/80 text-2xl font-medium">
-                  La visite de la vieille dame
-                </span>
-              </div>
-            </div>
           </div>
         </div>
       </section>
