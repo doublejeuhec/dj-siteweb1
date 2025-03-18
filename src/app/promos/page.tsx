@@ -84,7 +84,8 @@ export default function PromosPage() {
                                 <span className="font-medium">
                                   {roleAbbreviations[abbr] || abbr}
                                 </span>{" "}
-                                : {role}
+                                :{" "}
+                                {typeof role === "string" ? role : String(role)}
                               </li>
                             )
                           )}
