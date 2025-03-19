@@ -32,7 +32,7 @@ export default async function EspaceMembres() {
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h1 className="text-4xl font-bold mb-6 text-gray-900 dark:text-white">
-            Espace Membre
+            Espace Membres
           </h1>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
