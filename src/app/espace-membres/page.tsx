@@ -1,124 +1,116 @@
 import Navbar from "@/components/navbar";
-import { SubscriptionCheck } from "@/components/subscription-check";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Camera,
-  InfoIcon,
-  MessageCircle,
-  UserCircle,
-  Users,
-} from "lucide-react";
-import { redirect } from "next/navigation";
+import PricingCard from "@/components/pricing-card";
+import { Facebook, Image } from "lucide-react";
 import { createClient } from "../../../supabase/server";
 
 export default async function EspaceMembres() {
   const supabase = await createClient();
-
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) {
-    return redirect("/sign-in");
-  }
+  const { data: plans, error } = await supabase.functions.invoke(
+    "supabase-functions-get-plans"
+  );
+
+  const promoPhotos = [
+    {
+      year: "2024",
+      url: "https://photos.app.goo.gl/8Jy7cDu8pVyqxsHv7",
+      label: "Promo 2023-2024",
+    },
+    {
+      year: "2025",
+      url: "https://photos.app.goo.gl/uFekqScVoBh96K5S7",
+      label: "Promo 2024-2025",
+    },
+  ];
 
   return (
-    <SubscriptionCheck>
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
       <Navbar />
-      <main className="w-full">
-        <div className="container mx-auto px-4 py-8 flex flex-col gap-8">
-          {/* Header Section */}
-          <header className="flex flex-col gap-4">
-            <h1 className="text-3xl font-bold">Espace Membres</h1>
-            <div className="bg-blue-50 text-sm p-4 px-5 rounded-lg text-blue-700 flex gap-3 items-start border border-blue-100">
-              <InfoIcon
-                size="18"
-                className="text-blue-500 mt-0.5 flex-shrink-0"
-              />
-              <div>
-                <p className="font-medium">
-                  Bienvenue dans l'espace privé de la troupe DOUBLE JEU !
-                </p>
-                <p className="mt-1">
-                  Cet espace est réservé aux membres de la troupe pour partager
-                  des photos, discuter et organiser les répétitions.
-                </p>
+      <div className="container mx-auto px-4 py-16">
+        <div className="max-w-3xl mx-auto text-center mb-16">
+          <h1 className="text-4xl font-bold mb-6 text-gray-900 dark:text-white">
+            Espace Membre
+          </h1>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            {/* Facebook Section */}
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-8 transition-all hover:shadow-lg h-full">
+              <div className="flex items-center justify-center mb-4">
+                <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded-full">
+                  <Facebook className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                </div>
+              </div>
+              <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">
+                Rejoignez notre communauté Facebook
+              </h2>
+              <p className="mb-6 text-gray-600 dark:text-gray-300">
+                Participez aux discussions, restez informé des dernières
+                actualités et connectez-vous avec d'autres membres :
+              </p>
+              <a
+                href="https://www.facebook.com/groups/3512056069101383/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+              >
+                Rejoindre le groupe Facebook
+              </a>
+            </div>
+
+            {/* Google Photos Section */}
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-8 transition-all hover:shadow-lg h-full">
+              <div className="flex items-center justify-center mb-4">
+                <div className="bg-red-100 dark:bg-red-900 p-3 rounded-full">
+                  <Image className="h-6 w-6 text-red-600 dark:text-red-400" />
+                </div>
+              </div>
+              <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">
+                Albums photos des promos
+              </h2>
+              <p className="mb-4 text-gray-600 dark:text-gray-300">
+                Accédez aux souvenirs partagés de chaque promotion :
+              </p>
+
+              <div className="space-y-4">
+                {promoPhotos.map((promo) => (
+                  <a
+                    key={promo.year}
+                    href={promo.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-md text-gray-800 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-center"
+                  >
+                    {promo.label}
+                  </a>
+                ))}
               </div>
             </div>
-          </header>
+          </div>
 
-          {/* User Profile Section */}
-          <section className="bg-card rounded-xl p-6 border shadow-sm">
-            <div className="flex items-center gap-4 mb-6">
-              <UserCircle size={48} className="text-primary" />
-              <div>
-                <h2 className="font-semibold text-xl">Profil Membre</h2>
-                <p className="text-sm text-muted-foreground">{user.email}</p>
-              </div>
-            </div>
-          </section>
-
-          {/* Features Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="flex items-center gap-2">
-                  <Camera className="h-5 w-5 text-blue-500" />
-                  Galerie Photos
-                </CardTitle>
-                <CardDescription>
-                  Partagez vos photos des répétitions et spectacles
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  Fonctionnalité à venir prochainement...
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="flex items-center gap-2">
-                  <MessageCircle className="h-5 w-5 text-blue-500" />
-                  Forum de Discussion
-                </CardTitle>
-                <CardDescription>
-                  Échangez avec les autres membres de la troupe
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  Fonctionnalité à venir prochainement...
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="flex items-center gap-2">
-                  <Users className="h-5 w-5 text-blue-500" />
-                  Annuaire des Membres
-                </CardTitle>
-                <CardDescription>
-                  Retrouvez les coordonnées des membres
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  Fonctionnalité à venir prochainement...
-                </p>
-              </CardContent>
-            </Card>
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-8 mb-12 transition-all hover:shadow-lg">
+            <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">
+              Soutenez notre association
+            </h2>
+            <p className="mb-6 text-gray-600 dark:text-gray-300">
+              Votre soutien financier est crucial pour nous aider à continuer
+              notre mission. Choisissez l'option qui vous convient parmi nos
+              formules ci-dessous.
+            </p>
           </div>
         </div>
-      </main>
-    </SubscriptionCheck>
+
+        <h2 className="text-3xl font-bold text-center mb-10 text-gray-800 dark:text-white">
+          Nos formules de soutien
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          {plans?.map((item: any) => (
+            <PricingCard key={item.id} item={item} user={user} />
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
