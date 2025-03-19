@@ -1,9 +1,8 @@
 "use server";
 
-import { createClient } from "../../supabase/server";
 import { encodedRedirect } from "@/utils/utils";
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { createClient } from "../../supabase/server";
 
 export const signUpAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
@@ -19,7 +18,7 @@ export const signUpAction = async (formData: FormData) => {
     return encodedRedirect(
       "error",
       "/sign-up",
-      "Email et mot de passe sont requis",
+      "Email et mot de passe sont requis"
     );
   }
 
@@ -28,7 +27,7 @@ export const signUpAction = async (formData: FormData) => {
     return encodedRedirect(
       "error",
       "/sign-up",
-      "Le mot de passe secret est incorrect. Seuls les membres de la troupe peuvent s'inscrire.",
+      "Le mot de passe secret est incorrect. Seuls les membres de la troupe peuvent s'inscrire."
     );
   }
 
@@ -37,7 +36,7 @@ export const signUpAction = async (formData: FormData) => {
     return encodedRedirect(
       "error",
       "/sign-up",
-      "Veuillez indiquer votre année d'entrée dans la troupe",
+      "Veuillez indiquer votre année d'entrée dans la troupe"
     );
   }
 
@@ -45,7 +44,7 @@ export const signUpAction = async (formData: FormData) => {
     return encodedRedirect(
       "error",
       "/sign-up",
-      "Veuillez indiquer votre numéro de téléphone",
+      "Veuillez indiquer votre numéro de téléphone"
     );
   }
 
@@ -53,7 +52,7 @@ export const signUpAction = async (formData: FormData) => {
     return encodedRedirect(
       "error",
       "/sign-up",
-      "Veuillez indiquer votre activité professionnelle actuelle",
+      "Veuillez indiquer votre activité professionnelle actuelle"
     );
   }
 
@@ -102,7 +101,7 @@ export const signUpAction = async (formData: FormData) => {
   return encodedRedirect(
     "success",
     "/sign-up",
-    "Merci de vous être inscrit ! Veuillez vérifier votre email pour le lien de confirmation.",
+    "Merci de vous être inscrit ! Veuillez vérifier votre email pour le lien de confirmation."
   );
 };
 
@@ -120,7 +119,7 @@ export const signInAction = async (formData: FormData) => {
     return encodedRedirect("error", "/sign-in", error.message);
   }
 
-  return redirect("/dashboard");
+  return redirect("/espace-membres");
 };
 
 export const forgotPasswordAction = async (formData: FormData) => {
@@ -138,7 +137,7 @@ export const forgotPasswordAction = async (formData: FormData) => {
     return encodedRedirect(
       "error",
       "/forgot-password",
-      "Could not reset password",
+      "Could not reset password"
     );
   }
 
@@ -149,7 +148,7 @@ export const forgotPasswordAction = async (formData: FormData) => {
   return encodedRedirect(
     "success",
     "/forgot-password",
-    "Check your email for a link to reset your password.",
+    "Check your email for a link to reset your password."
   );
 };
 
@@ -162,16 +161,16 @@ export const resetPasswordAction = async (formData: FormData) => {
   if (!password || !confirmPassword) {
     encodedRedirect(
       "error",
-      "/protected/reset-password",
-      "Password and confirm password are required",
+      "/espace-membres/reset-password",
+      "Password and confirm password are required"
     );
   }
 
   if (password !== confirmPassword) {
     encodedRedirect(
       "error",
-      "/dashboard/reset-password",
-      "Passwords do not match",
+      "/espace-membres/reset-password",
+      "Passwords do not match"
     );
   }
 
@@ -182,12 +181,16 @@ export const resetPasswordAction = async (formData: FormData) => {
   if (error) {
     encodedRedirect(
       "error",
-      "/dashboard/reset-password",
-      "Password update failed",
+      "/espace-membres/reset-password",
+      "Password update failed"
     );
   }
 
-  encodedRedirect("success", "/protected/reset-password", "Password updated");
+  encodedRedirect(
+    "success",
+    "/espace-membres/reset-password",
+    "Password updated"
+  );
 };
 
 export const signOutAction = async () => {

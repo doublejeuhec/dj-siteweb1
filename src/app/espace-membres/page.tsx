@@ -1,13 +1,4 @@
 import DashboardNavbar from "@/components/dashboard-navbar";
-import { createClient } from "../../../supabase/server";
-import {
-  Camera,
-  InfoIcon,
-  MessageCircle,
-  UserCircle,
-  Users,
-} from "lucide-react";
-import { redirect } from "next/navigation";
 import { SubscriptionCheck } from "@/components/subscription-check";
 import {
   Card,
@@ -16,8 +7,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Camera,
+  InfoIcon,
+  MessageCircle,
+  UserCircle,
+  Users,
+} from "lucide-react";
+import { redirect } from "next/navigation";
+import { createClient } from "../../../supabase/server";
 
-export default async function Dashboard() {
+export default async function EspaceMembres() {
   const supabase = await createClient();
 
   const {

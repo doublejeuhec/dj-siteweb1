@@ -127,7 +127,7 @@ export default function Navbar() {
           {!loading && user && <div className="h-5 w-px bg-gray-300"></div>}
           {!loading && user && (
             <Link
-              href="/dashboard"
+              href="/espace-membres"
               className="font-medium text-gray-700 hover:text-red-600 transition-colors"
             >
               Espace Membres
@@ -139,7 +139,7 @@ export default function Navbar() {
         <div className="hidden md:flex gap-4 items-center">
           {!loading && user ? (
             <>
-              <Link href="/dashboard"></Link>
+              <Link href="/espace-membres"></Link>
               <UserProfile />
             </>
           ) : (
@@ -196,7 +196,7 @@ export default function Navbar() {
             </Link>
             {!loading && user && (
               <Link
-                href="/dashboard"
+                href="/espace-membres"
                 className="font-medium text-gray-700 hover:text-red-600 transition-colors py-2"
                 onClick={() => setMobileMenuOpen(false)}
               >

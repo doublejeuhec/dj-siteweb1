@@ -1,5 +1,5 @@
-import { CheckCircle2, Ticket } from "lucide-react";
-import Link from "next/link";
+import Footer from "@/components/footer";
+import Navbar from "@/components/navbar";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,8 +8,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import Navbar from "@/components/navbar";
-import Footer from "@/components/footer";
+import { CheckCircle2, Ticket } from "lucide-react";
+import Link from "next/link";
 
 export default function SuccessPage() {
   return (
@@ -45,7 +45,7 @@ export default function SuccessPage() {
 
             <div className="flex gap-4 w-full">
               <Button asChild variant="outline" className="w-1/2">
-                <Link href="/dashboard">Mon Compte</Link>
+                <Link href="/espace-membres">Mon Compte</Link>
               </Button>
               <Button asChild className="w-1/2">
                 <Link href="/">Retour à l'Accueil</Link>

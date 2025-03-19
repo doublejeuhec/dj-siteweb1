@@ -1,16 +1,16 @@
 "use client";
 
+import { Camera, Home, MessageCircle, UserCircle, Users } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { createClient } from "../../supabase/client";
+import { Button } from "./ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Button } from "./ui/button";
-import { UserCircle, Home, Camera, MessageCircle, Users } from "lucide-react";
-import { useRouter } from "next/navigation";
 
 export default function DashboardNavbar() {
   const supabase = createClient();
@@ -27,7 +27,7 @@ export default function DashboardNavbar() {
 
         <div className="hidden md:flex gap-6 items-center">
           <Link
-            href="/dashboard"
+            href="/espace-membres"
             className="font-medium text-gray-700 hover:text-red-600 transition-colors flex items-center gap-1.5"
           >
             <Home className="h-4 w-4" />

@@ -32,7 +32,7 @@ export async function middleware(req: NextRequest) {
   } = await supabase.auth.getUser();
 
   // Protected routes
-  if (req.nextUrl.pathname.startsWith("/dashboard") && error) {
+  if (req.nextUrl.pathname.startsWith("/espace-membres") && error) {
     return NextResponse.redirect(new URL("/sign-in", req.url));
   }
 

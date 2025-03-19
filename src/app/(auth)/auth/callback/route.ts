@@ -1,5 +1,5 @@
-import { createClient } from "../../../../../supabase/server";
 import { NextResponse } from "next/server";
+import { createClient } from "../../../../../supabase/server";
 
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
@@ -12,6 +12,6 @@ export async function GET(request: Request) {
   }
 
   // URL to redirect to after sign in process completes
-  const redirectTo = redirect_to || "/dashboard";
+  const redirectTo = redirect_to || "/espace-membres";
   return NextResponse.redirect(new URL(redirectTo, requestUrl.origin));
-} 
+}
