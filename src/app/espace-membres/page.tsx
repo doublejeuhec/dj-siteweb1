@@ -1,4 +1,4 @@
-import DashboardNavbar from "@/components/dashboard-navbar";
+import Navbar from "@/components/navbar";
 import { SubscriptionCheck } from "@/components/subscription-check";
 import {
   Card,
@@ -30,7 +30,7 @@ export default async function EspaceMembres() {
 
   return (
     <SubscriptionCheck>
-      <DashboardNavbar />
+      <Navbar />
       <main className="w-full">
         <div className="container mx-auto px-4 py-8 flex flex-col gap-8">
           {/* Header Section */}
