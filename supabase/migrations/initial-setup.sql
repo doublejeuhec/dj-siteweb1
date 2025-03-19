@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS public.users (
 -- Subscriptions table
 CREATE TABLE IF NOT EXISTS public.subscriptions (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    user_id TEXT REFERENCES public.users(user_id),
+    user_id TEXT REFERENCES public.users(id),
     stripe_id TEXT UNIQUE,
     price_id TEXT,
     stripe_price_id TEXT,
@@ -67,10 +67,9 @@ ALTER TABLE public.webhook_events ENABLE ROW LEVEL SECURITY;
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
-  INSERT INTO public.users (id, user_id, email, name, full_name, avatar_url, token_identifier, created_at, updated_at)
-  VALUES (NEW.id, NEW.id::TEXT, NEW.email, NEW.raw_user_meta_data->>'name',
-          NEW.raw_user_meta_data->>'full_name', NEW.raw_user_meta_data->>'avatar_url',
-          NEW.email, NEW.created_at, NEW.updated_at);
+  INSERT INTO public.users (id, email, full_name, avatar_url, created_at, updated_at)
+  VALUES (NEW.id, NEW.email, NEW.raw_user_meta_data->>'full_name', 
+          NEW.raw_user_meta_data->>'avatar_url', NEW.created_at, NEW.updated_at);
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
@@ -87,11 +86,10 @@ RETURNS TRIGGER AS $$
 BEGIN
   UPDATE public.users
   SET email = NEW.email,
-      name = NEW.raw_user_meta_data->>'name',
       full_name = NEW.raw_user_meta_data->>'full_name',
       avatar_url = NEW.raw_user_meta_data->>'avatar_url',
       updated_at = NEW.updated_at
-  WHERE user_id = NEW.id::TEXT;
+  WHERE id = NEW.id;
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;

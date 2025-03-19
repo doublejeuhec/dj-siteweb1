@@ -66,7 +66,6 @@ export const signUpAction = async (formData: FormData) => {
       data: {
         full_name: fullName,
         email: email,
-        is_former_member: true,
         join_year: joinYear ? parseInt(joinYear) : null,
         phone_number: phoneNumber,
         profession: profession,
@@ -80,18 +79,19 @@ export const signUpAction = async (formData: FormData) => {
 
   if (user) {
     try {
-      const { error: updateError } = await supabase.from("users").insert({
-        id: user.id,
-        user_id: user.id,
-        name: fullName,
-        email: email,
-        token_identifier: user.id,
-        created_at: new Date().toISOString(),
-        is_former_member: true,
-        join_year: parseInt(joinYear),
-        phone_number: phoneNumber,
-        profession: profession,
-      });
+      // When a user signs up through auth.signUp, a trigger automatically creates
+      // a record in the public.users table. We don't need to manually insert, but
+      // we should update the additional fields that might be missing
+      const { error: updateError } = await supabase
+        .from("users")
+        .update({
+          full_name: fullName,
+          join_year: joinYear ? parseInt(joinYear) : null,
+          phone_number: phoneNumber,
+          profession: profession,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", user.id);
 
       if (updateError) {
         // Provide proper error handling with a user-friendly message
