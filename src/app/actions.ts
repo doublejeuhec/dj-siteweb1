@@ -67,6 +67,9 @@ export const signUpAction = async (formData: FormData) => {
         full_name: fullName,
         email: email,
         is_former_member: true,
+        join_year: joinYear ? parseInt(joinYear) : null,
+        phone_number: phoneNumber,
+        profession: profession,
       },
     },
   });
@@ -91,11 +94,33 @@ export const signUpAction = async (formData: FormData) => {
       });
 
       if (updateError) {
-        // Error handling without console.error
+        // Provide proper error handling with a user-friendly message
+        return encodedRedirect(
+          "error",
+          "/sign-up",
+          "Erreur lors de l'enregistrement des informations dans la base de données: " +
+            updateError.message
+        );
       }
     } catch (err) {
-      // Error handling without console.error
+      // Properly handle and inform the user about unexpected errors
+      const errMessage =
+        err instanceof Error
+          ? err.message
+          : "Une erreur inattendue s'est produite";
+      return encodedRedirect(
+        "error",
+        "/sign-up",
+        "Erreur lors de l'inscription: " + errMessage
+      );
     }
+  } else {
+    // Handle the case where user object is null or undefined
+    return encodedRedirect(
+      "error",
+      "/sign-up",
+      "Erreur lors de la création du compte utilisateur"
+    );
   }
 
   return encodedRedirect(
