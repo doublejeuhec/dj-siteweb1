@@ -91,7 +91,7 @@ export type Database = {
             columns: ["user_id"];
             isOneToOne: false;
             referencedRelation: "users";
-            referencedColumns: ["user_id"];
+            referencedColumns: ["id"];
           },
         ];
       };
@@ -168,7 +168,15 @@ export type Database = {
           venue?: string | null;
           young_tickets?: number | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "tickets_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       users: {
         Row: {

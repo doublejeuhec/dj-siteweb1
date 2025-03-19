@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS public.users (
 -- Subscriptions table
 CREATE TABLE IF NOT EXISTS public.subscriptions (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    user_id TEXT REFERENCES public.users(id),
+    user_id UUID REFERENCES public.users(id),
     stripe_id TEXT UNIQUE,
     price_id TEXT,
     stripe_price_id TEXT,
@@ -103,7 +103,7 @@ CREATE TRIGGER on_auth_user_updated
 -- Tickets table
 CREATE TABLE IF NOT EXISTS public.tickets (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES auth.users(id),
+  user_id UUID REFERENCES public.users(id),
   customer_name TEXT NOT NULL,
   customer_email TEXT NOT NULL,
   customer_phone TEXT,
